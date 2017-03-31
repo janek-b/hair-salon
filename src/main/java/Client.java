@@ -105,4 +105,13 @@ public class Client {
     }
   }
 
+  public List<Appointment> getAppointments() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE clientId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Appointment.class);
+    }
+  }
+
 }

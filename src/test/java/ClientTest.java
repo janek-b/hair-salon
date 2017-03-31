@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.Arrays;
 
 public class ClientTest {
 
@@ -118,6 +119,18 @@ public class ClientTest {
     Client testClient = new Client("Jessica", testStylist.getId());
     testClient.save();
     assertEquals("Becky", testClient.getStylistName());
+  }
+
+  @Test
+  public void getAppointments_returnsAllAppointmentsForAClient() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, "2017-04-16", "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, "2017-03-16", "01:30:00");
+    testAppointment2.save();
+    Appointment[] appointments = new Appointment[] {testAppointment1, testAppointment2};
+    assertTrue(testClient.getAppointments().containsAll(Arrays.asList(appointments)));
   }
 
 }
