@@ -76,6 +76,15 @@ public class Client {
     }
   }
 
+  public void deleteClient() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM clients WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
   public void assignStylist() {
   this.stylistId = Stylist.getLowestClientCount().getId();
     try (Connection con = DB.sql2o.open()) {

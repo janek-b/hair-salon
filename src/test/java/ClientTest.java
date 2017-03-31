@@ -82,6 +82,15 @@ public class ClientTest {
   }
 
   @Test
+  public void deleteClient_removesClientFromDB_true() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    int testClientId = testClient.getId();
+    testClient.deleteClient();
+    assertEquals(null, Client.find(testClientId));
+  }
+
+  @Test
   public void assignStylist_setsStylistIdEqualsToStylistWithLeastNumberOfClients_true() {
     Stylist testStylist1 = new Stylist("Becky");
     testStylist1.save();
