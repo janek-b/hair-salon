@@ -86,13 +86,22 @@ public class Client {
   }
 
   public void assignStylist() {
-  this.stylistId = Stylist.getLowestClientCount().getId();
+    this.stylistId = Stylist.getLowestClientCount().getId();
     try (Connection con = DB.sql2o.open()) {
       String sql = "UPDATE clients SET stylistId = :stylistId WHERE id = :id;";
       con.createQuery(sql)
         .addParameter("stylistId", this.stylistId)
         .addParameter("id", this.id)
         .executeUpdate();
+    }
+  }
+
+  public String getStylistName() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT name FROM stylists WHERE id = :stylistId;";
+      return con.createQuery(sql)
+        .addParameter("stylistId", this.stylistId)
+        .executeAndFetchFirst(String.class);
     }
   }
 

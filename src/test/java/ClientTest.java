@@ -111,12 +111,13 @@ public class ClientTest {
     assertEquals(testStylist2.getId(), testClient4.getStylistId());
   }
 
-  // @Test
-  // public void getStylistName_returnsNameOfAssignedStylist_Becky() {
-  //   Stylist testStylist = new Stylist("Becky");
-  //   testStylist.save();
-  //   Client testClient = new Client("Jessica", testStylist.getId());
-  //   testClient.save();
-  // }
+  @Test
+  public void getStylistName_returnsNameOfAssignedStylist_Becky() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Client testClient = new Client("Jessica", testStylist.getId());
+    testClient.save();
+    assertEquals("Becky", testClient.getStylistName());
+  }
 
 }
