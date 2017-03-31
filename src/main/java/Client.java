@@ -63,4 +63,17 @@ public class Client {
     }
   }
 
+  public void updateClient(String name, int stylistId) {
+    this.name = name;
+    this.stylistId = stylistId;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE clients SET (name, stylistId) = (:name, :stylistId) WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("name", this.name)
+        .addParameter("stylistId", this.stylistId)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
 }

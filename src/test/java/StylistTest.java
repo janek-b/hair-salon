@@ -86,4 +86,5 @@ public class StylistTest {
     assertEquals("Jennifer", testStylist.getName());
   }
 
+
 }
