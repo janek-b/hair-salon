@@ -32,4 +32,21 @@ public class ClientTest {
     assertTrue(testClient1.equals(testClient2));
   }
 
+  @Test
+  public void all_returnsAllClientsFromDB_true() {
+    Client testClient1 = new Client("Jessica", 1);
+    testClient1.save();
+    Client testClient2 = new Client("Joe", 1);
+    testClient2.save();
+    assertTrue(Client.all().get(0).equals(testClient1));
+    assertTrue(Client.all().get(1).equals(testClient2));
+  }
+
+  @Test
+  public void save_savesClientToDB_true() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    assertTrue(Client.all().get(0).equals(testClient));
+  }
+
 }
