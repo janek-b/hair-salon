@@ -48,6 +48,7 @@
         <h4 class="modal-title" id="clientEditModalLabel">Edit Client</h4>
       </div>
       <div class="modal-body">
+
         <form id="clientEditForm" action="/stylists/$client.getStylistId()/clients/$client.getId()/edit" method="post">
           <label for="clientName">Name:</label>
           <input type="text" name="clientName" class="form-control" value="$client.getName()"required>
@@ -63,8 +64,10 @@
             #end
           </select>
         </form>
+
       </div>
       <div class="modal-footer">
+
         <div class="row">
           <div class="col-md-4">
             <form action="/stylists/$client.getStylistId()/clients/$client.getId()/delete" method="post">
@@ -76,6 +79,7 @@
             <button type="submit" form="clientEditForm" class="btn btn-success">Submit Changes</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>

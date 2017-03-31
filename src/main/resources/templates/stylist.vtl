@@ -2,6 +2,7 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="well">
+      <button type="button" class="pull-right btn btn-info" data-toggle="modal" data-target="#stylistEditModal">Edit</button>
       <h2>$stylist.getName()</h2>
       <h3>Clients:</h3>
       <ul>
@@ -31,6 +32,40 @@
       #else
         <p>No upcoming appointments</p>
       #end
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="stylistEditModal" tabindex="-1" role="dialog" aria-labelledby="stylistEditModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="stylistEditModalLabel">Edit Stylist</h4>
+      </div>
+      <div class="modal-body">
+
+        <form id="stylistEditForm" action="/stylists/$stylist.getId()/edit" method="post">
+          <label for="stylistName">Name:</label>
+          <input type="text" name="stylistName" class="form-control" value="$stylist.getName()" required>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <div class="row">
+          <div class="col-md-4">
+            <form action="/stylists/$stylist.getId()/delete" method="post">
+              <button type="submit" class="pull-left btn btn-danger">Delete Stylist</button>
+            </form>
+          </div>
+          <div class="col-md-6 col-md-offset-2">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" form="stylistEditForm" class="btn btn-success">Submit Changes</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
