@@ -1,3 +1,20 @@
 <!--stylists.vtl-->
-
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well">
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Stylist Name</th>
+          <th>Number of Clients</th>
+        </tr>
+        #foreach($stylist in $stylists)
+          <tr>
+            <td><a href="/stylists/$stylist.getId()">$stylist.getName()</a></td>
+            <td>$stylist.getClients().size()</td>
+          </tr>
+        #end
+      </table>
+    </div>
+  </div>
+</div>
 <!--stylists.vtl-->
