@@ -49,4 +49,18 @@ public class ClientTest {
     assertTrue(Client.all().get(0).equals(testClient));
   }
 
+  @Test
+  public void save_assignsIdToClient_true() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    assertEquals(testClient.getId(), Client.all().get(0).getId());
+  }
+
+  @Test
+  public void getId_returnsAnId_true() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    assertTrue(testClient.getId() > 0);
+  }
+
 }
