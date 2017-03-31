@@ -1,5 +1,6 @@
 import org.sql2o.*;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Client {
   private String name;
@@ -105,11 +106,24 @@ public class Client {
     }
   }
 
-  public List<Appointment> getAppointments() {
+  public List<Appointment> getUpcomingAppointments() {
+    String today = LocalDate.now().toString();
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM appointments WHERE clientId = :id;";
+      String sql = "SELECT * FROM appointments WHERE clientId = :id AND appDate >= CAST(:today as date) ORDER BY appDate asc;";
       return con.createQuery(sql)
         .addParameter("id", this.id)
+        .addParameter("today", today)
+        .executeAndFetch(Appointment.class);
+    }
+  }
+
+  public List<Appointment> getPastAppointments() {
+    String today = LocalDate.now().toString();
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE clientId = :id AND appDate <= CAST(:today as date) ORDER BY appDate desc;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .addParameter("today", today)
         .executeAndFetch(Appointment.class);
     }
   }
