@@ -92,7 +92,7 @@ public class App {
 
     get("/appointments", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("appointments", Appointment.all());
+      model.put("appointments", Appointment.upcomingAppointments());
       model.put("template", "templates/appointments.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

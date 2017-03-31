@@ -1,0 +1,25 @@
+<!--appointments.vtl-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well">
+      <h3>Upcoming Appointments</h3>
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Client</th>
+          <th>Stylist</th>
+        </tr>
+        #foreach($appointment in $appointments)
+          <tr>
+            <td>$appointment.getFormatDate()</td>
+            <td>$appointment.getFormatTime()</td>
+            <td>$appointment.getClientName()</td>
+            <td>$appointment.getStylistName()</td>
+          </tr>
+        #end
+      </table>
+    </div>
+  </div>
+</div>
+<!--appointments.vtl-->
