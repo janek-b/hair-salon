@@ -1,8 +1,10 @@
 import org.sql2o.*;
 
 public class Stylist {
+  private String name;
+  private int id;
 
-  public Stylist() {
+  public Stylist(String name) {
 
   }
 
