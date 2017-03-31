@@ -131,5 +131,16 @@ public class StylistTest {
     assertEquals(testStylist2.getId(), Client.find(testClient3.getId()).getStylistId());
   }
 
+  @Test
+  public void getAppointments_returnsAllAppointmentsForAStylist() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Appointment testAppointment1 = new Appointment(1, testStylist.getId(), "2017-04-16", "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(1, testStylist.getId(), "2017-03-16", "01:30:00");
+    testAppointment2.save();
+    Appointment[] appointments = new Appointment[] {testAppointment1, testAppointment2};
+    assertTrue(testStylist.getAppointments().containsAll(Arrays.asList(appointments)));
+  }
 
 }
