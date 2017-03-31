@@ -13,4 +13,10 @@ public class StylistTest {
     assertTrue(testStylist instanceof Stylist);
   }
 
+  @Test
+  public void getName_returnsStylistName_Becky() {
+    Stylist testStylist = new Stylist("Becky");
+    assertEquals("Becky", testStylist.getName());
+  }
+
 }

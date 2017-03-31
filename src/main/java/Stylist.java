@@ -5,7 +5,11 @@ public class Stylist {
   private int id;
 
   public Stylist(String name) {
+    this.name = name;
+  }
 
+  public String getName() {
+    return this.name;
   }
 
 }
