@@ -145,4 +145,15 @@ public class AppointmentTest {
     assertEquals("Becky", testAppointment.getStylistName());
   }
 
+  @Test
+  public void getClientName_returnsNameOfAssignedClient_Jessica() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Client testClient = new Client("Jessica", testStylist.getId());
+    testClient.save();
+    Appointment testAppointment = new Appointment(testClient.getId(), testStylist.getId(), "2017-04-13", "15:30:00");
+    testAppointment.save();
+    assertEquals("Jessica", testAppointment.getClientName());
+  }
+
 }

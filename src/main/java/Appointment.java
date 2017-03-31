@@ -144,4 +144,13 @@ public class Appointment {
     }
   }
 
+  public String getClientName() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT name FROM clients WHERE id = :clientId;";
+      return con.createQuery(sql)
+        .addParameter("clientId", this.clientId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
 }
