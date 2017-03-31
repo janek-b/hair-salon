@@ -126,4 +126,13 @@ public class Appointment {
     return DateFormat.getTimeInstance(DateFormat.SHORT).format(time);
   }
 
+  public static List<Appointment> getDaysAppointment(String day) {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE appDate = CAST(:day as date);";
+      return con.createQuery(sql)
+        .addParameter("day", day)
+        .executeAndFetch(Appointment.class);
+    }
+  }
+
 }

@@ -9,6 +9,28 @@
         #end
       </ul>
     </div>
+    <div class="well">
+      <h3>Today's Appointments</h3>
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Client</th>
+          <th>Stylist</th>
+        </tr>
+        #foreach($appointment in $appointmentsToday)
+          <tr>
+            <td>$appointment.getFormatDate()</td>
+            <td>$appointment.getFormatTime()</td>
+            <td>$appointment.getClientId()</td>
+            <td>$appointment.getStylistId()</td>
+          </tr>
+        #end
+      </table>
+    </div>
+    <div class="well">
+      <h3>Tomorrow's Appointments</h3>
+    </div>
   </div>
 </div>
 <!--index.vtl-->

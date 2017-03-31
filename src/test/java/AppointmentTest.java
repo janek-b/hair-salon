@@ -3,6 +3,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.sql.Time;
 import java.sql.Date;
+import java.util.Arrays;
 
 public class AppointmentTest {
 
@@ -91,8 +92,6 @@ public class AppointmentTest {
     Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
     testAppointment.save();
     testAppointment.updateAppointment("2017-04-16", "09:30:00");
-    Date testDate = Date.valueOf("2017-04-16");
-    Time testTime = Time.valueOf("09:30:00");
     assertEquals("2017-04-16", testAppointment.getDate());
     assertEquals("2017-04-16", Appointment.find(testAppointment.getId()).getDate());
     assertEquals("09:30:00", testAppointment.getTime());
@@ -120,6 +119,19 @@ public class AppointmentTest {
     Appointment testAppointment = new Appointment(1, 1, "2017-04-13", "15:30:00");
     testAppointment.save();
     assertEquals("3:30 PM", testAppointment.getFormatTime());
+  }
+
+  @Test
+  public void getDaysAppointment_returnsAllAppointmentsOnGivenDay_List() {
+    Appointment testAppointment1 = new Appointment(1, 2, "2017-03-16", "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    testAppointment2.save();
+    Appointment testAppointment3 = new Appointment(1, 1, "2017-03-18", "01:30:00");
+    testAppointment3.save();
+    Appointment[] appointments = new Appointment[] {testAppointment1, testAppointment2};
+    assertTrue(Appointment.getDaysAppointment("2017-03-16").containsAll(Arrays.asList(appointments)));
+    assertFalse(Appointment.getDaysAppointment("2017-03-16").contains(testAppointment3));
   }
 
 }
