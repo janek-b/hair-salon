@@ -77,4 +77,13 @@ public class StylistTest {
     assertTrue(testStylist.getClients().containsAll(Arrays.asList(clients)));
   }
 
+  @Test
+  public void updateStylist_updatesStylistProperties_true() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    testStylist.updateStylist("Jennifer");
+    assertEquals("Jennifer", Stylist.find(testStylist.getId()).getName());
+    assertEquals("Jennifer", testStylist.getName());
+  }
+
 }
