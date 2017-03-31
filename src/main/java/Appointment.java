@@ -81,4 +81,26 @@ public class Appointment {
     }
   }
 
+  public void updateAppointment(String appDate, String appTime) {
+    this.appDate = Date.valueOf(appDate);
+    this.appTime = Time.valueOf(appTime);
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE appointments SET (appDate, appTime) = (:appDate, :appTime) WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("appDate", this.appDate)
+        .addParameter("appTime", this.appTime)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void deleteAppointment() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM appointments WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
 }

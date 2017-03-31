@@ -86,4 +86,26 @@ public class AppointmentTest {
     assertEquals(testAppointment, Appointment.find(testAppointment.getId()));
   }
 
+  @Test
+  public void updateAppointment_updatesAppointmentProperties_true() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    testAppointment.save();
+    testAppointment.updateAppointment("2017-04-16", "09:30:00");
+    Date testDate = Date.valueOf("2017-04-16");
+    Time testTime = Time.valueOf("09:30:00");
+    assertEquals(testDate, testAppointment.getDate());
+    assertEquals(testDate, Appointment.find(testAppointment.getId()).getDate());
+    assertEquals(testTime, testAppointment.getTime());
+    assertEquals(testTime, Appointment.find(testAppointment.getId()).getTime());
+  }
+
+  @Test
+  public void deleteAppointment_removesAppointmentFromDB_true() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    testAppointment.save();
+    int testAppointmentId = testAppointment.getId();
+    testAppointment.deleteAppointment();
+    assertEquals(null, Appointment.find(testAppointmentId));
+  }
+
 }
