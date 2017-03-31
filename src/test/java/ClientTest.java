@@ -63,4 +63,11 @@ public class ClientTest {
     assertTrue(testClient.getId() > 0);
   }
 
+  @Test
+  public void find_returnsCLientWithSameId_Jessica() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    assertEquals(testClient, Client.find(testClient.getId()));
+  }
+
 }
