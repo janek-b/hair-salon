@@ -65,16 +65,20 @@ public class AppointmentTest {
     assertTrue(Appointment.all().get(0).equals(testAppointment));
   }
 
-  // @Test
-  // public void save_assignsIdToAppointment_true() {
-  //
-  // }
-  //
-  // @Test
-  // public void getId_returnsAnId_true() {
-  //
-  // }
-  //
+  @Test
+  public void save_assignsIdToAppointment_true() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    testAppointment.save();
+    assertEquals(testAppointment.getId(), Appointment.all().get(0).getId());
+  }
+
+  @Test
+  public void getId_returnsAnId_true() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    testAppointment.save();
+    assertTrue(testAppointment.getId() > 0);
+  }
+
   // @Test
   // public void find_returnsAppointmentWithSameId_true() {
   //
