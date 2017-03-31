@@ -19,4 +19,20 @@ public class Client {
     return this.stylistId;
   }
 
+  public int getId() {
+    return this.id;
+  }
+
+  @Override
+  public boolean equals(Object otherClient) {
+    if (!(otherClient instanceof Client)) {
+      return false;
+    } else {
+      Client newClient = (Client) otherClient;
+      return this.getName().equals(newClient.getName()) &&
+             this.getStylistId() == newClient.getStylistId() &&
+             this.getId() == newClient.getId();
+    }
+  }
+
 }
