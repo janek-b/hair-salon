@@ -1,7 +1,7 @@
 import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.sql.Timestamp;
+import java.sql.Time;
 import java.sql.Date;
 
 public class AppointmentTest {
@@ -26,5 +26,12 @@ public class AppointmentTest {
   public void getStylistId_returnsStylistId_1() {
     Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30");
     assertEquals(1, testAppointment.getStylistId());
+  }
+
+  @Test
+  public void getDate_returnsCorrectDate_Date() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30");
+    Date testDate = Date.valueOf("2017-03-16");
+    assertEquals(testDate, testAppointment.getDate());
   }
 }
