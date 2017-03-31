@@ -13,6 +13,7 @@ public class Appointment {
     this.clientId = clientId;
     this.stylistId = stylistId;
     this.appDate = Date.valueOf(appDate);
+    this.appTime = Time.valueOf(appTime);
   }
 
   public int getClientId() {
@@ -25,6 +26,10 @@ public class Appointment {
 
   public Date getDate() {
     return this.appDate;
+  }
+
+  public Time getTime() {
+    return this.appTime;
   }
 
 }
