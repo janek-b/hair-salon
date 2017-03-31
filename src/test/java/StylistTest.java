@@ -19,4 +19,11 @@ public class StylistTest {
     assertEquals("Becky", testStylist.getName());
   }
 
+  @Test
+  public void equals_ifStylistNameIsTheSame_true() {
+    Stylist testStylist1 = new Stylist("Becky");
+    Stylist testStylist2 = new Stylist("Becky");
+    assertTrue(testStylist1.equals(testStylist2));
+  }
+
 }
