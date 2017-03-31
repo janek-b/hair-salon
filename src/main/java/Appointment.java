@@ -115,4 +115,15 @@ public class Appointment {
     return DateFormat.getDateInstance().format(date);
   }
 
+  public String getFormatTime() {
+    Time time;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT appTime FROM appointments WHERE id = :id;";
+      time = con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetchFirst(Time.class);
+    }
+    return DateFormat.getTimeInstance(DateFormat.SHORT).format(time);
+  }
+
 }

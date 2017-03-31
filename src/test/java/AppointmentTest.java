@@ -108,4 +108,18 @@ public class AppointmentTest {
     assertEquals(null, Appointment.find(testAppointmentId));
   }
 
+  @Test
+  public void getFormatDate_returnsDateInFormattedString() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-04-13", "15:30:00");
+    testAppointment.save();
+    assertEquals("Apr 13, 2017", testAppointment.getFormatDate());
+  }
+
+  @Test
+  public void getFormatTime_returnsTimeInFormattedString() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-04-13", "15:30:00");
+    testAppointment.save();
+    assertEquals("3:30 PM", testAppointment.getFormatTime());
+  }
+
 }

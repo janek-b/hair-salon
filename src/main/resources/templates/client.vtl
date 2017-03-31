@@ -10,7 +10,7 @@
     <div class="well">
       <h4>Upcoming Appointments</h4>
       #foreach($appointment in $client.getAppointments())
-        <p>$appointment.getFormatDate() at $appointment.getTime()</p>
+        <p>$appointment.getFormatDate() at $appointment.getFormatTime()</p>
       #end
     </div>
     <div class="well">
