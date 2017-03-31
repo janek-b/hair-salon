@@ -1,0 +1,34 @@
+<!--admin.vtl-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well">
+      <h3>Add a new Stylist</h3>
+      <form action="/stylists/new" method="post">
+        <label for="stylistName">Name:</label>
+        <input type="text" name="stylistName" class="form-control" required>
+        <button type="submit" class="btn btn-primary">Add Stylist</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well">
+      <h3>Add a new Client</h3>
+      <form action="/clients/new" method="post">
+        <label for="clientName">Name:</label>
+        <input type="text" name="clientName" class="form-control" required>
+        <label for="clientStylist">Assign a Stylist</label>
+        <select class="form-control" name="clientStylist" required>
+          <option value="$autoStylist.getId()">Auto-assign Stylist</option>
+          #foreach($stylist in $stylists)
+            <option value="$stylist.getId()">$stylist.getName()</option>
+          #end
+        </select>
+        <button type="submit" class="btn btn-primary">Add Client</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!--admin.vtl-->
