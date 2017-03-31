@@ -32,4 +32,22 @@ public class Appointment {
     return this.appTime;
   }
 
+  public int getId() {
+    return this.id;
+  }
+
+  @Override
+  public boolean equals(Object otherAppointment) {
+    if (!(otherAppointment instanceof Appointment)) {
+      return false;
+    } else {
+      Appointment newAppointment = (Appointment) otherAppointment;
+      return this.getClientId() == newAppointment.getClientId() &&
+             this.getStylistId() == newAppointment.getStylistId() &&
+             this.getDate().equals(newAppointment.getDate()) &&
+             this.getTime().equals(newAppointment.getTime()) &&
+             this.getId() == newAppointment.getId();
+    }
+  }
+
 }

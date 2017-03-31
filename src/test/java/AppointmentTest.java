@@ -40,4 +40,37 @@ public class AppointmentTest {
     Time testTime = Time.valueOf("01:30:00");
     assertEquals(testTime, testAppointment.getTime());
   }
+
+  @Test
+  public void equals_ifAllPropertiesAreTheSame_true() {
+    Appointment testAppointment1 = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    Appointment testAppointment2 = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    assertTrue(testAppointment1.equals(testAppointment2));
+  }
+
+  // @Test
+  // public void all_returnsAllAppointmentsInDB_List() {
+  //
+  // }
+  //
+  // @Test
+  // public void save_savesAppointmentIntoDB_true() {
+  //
+  // }
+  //
+  // @Test
+  // public void save_assignsIdToAppointment_true() {
+  //
+  // }
+  //
+  // @Test
+  // public void getId_returnsAnId_true() {
+  //
+  // }
+  //
+  // @Test
+  // public void find_returnsAppointmentWithSameId_true() {
+  //
+  // }
+
 }
