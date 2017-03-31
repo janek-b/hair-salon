@@ -7,4 +7,10 @@ public class ClientTest {
   @Rule
   public DatabaseRule database = new DatabaseRule();
 
+  @Test
+  public void client_instantiatesCorrectly() {
+    Client testClient = new Client("Jessica", 1);
+    assertTrue(testClient instanceof Client);
+  }
+
 }
