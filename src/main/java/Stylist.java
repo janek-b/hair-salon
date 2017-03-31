@@ -84,11 +84,15 @@ public class Stylist {
   }
 
   public void deleteStylist() {
+    List<Client> clients = this.getClients();
     try (Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM stylists WHERE id = :id;";
       con.createQuery(sql)
         .addParameter("id", this.id)
         .executeUpdate();
+    }
+    for (Client client: clients) {
+      client.assignStylist();
     }
   }
 

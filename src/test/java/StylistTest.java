@@ -103,7 +103,7 @@ public class StylistTest {
 
 
   @Test
-  public void deleteStylist_deletesStylistFromDBAndReassignsStylistsClients() {
+  public void deleteStylist_deletesStylistFromDB() {
     Stylist testStylist = new Stylist("Becky");
     testStylist.save();
     int testStylistId = testStylist.getId();
@@ -111,20 +111,25 @@ public class StylistTest {
     assertEquals(null, Stylist.find(testStylistId));
   }
 
-  // @Test
-  // public void deleteStylist_deletesStylistFromDBAndReassignsStylistsClients() {
-  //   Stylist testStylist1 = new Stylist("Becky");
-  //   testStylist1.save();
-  //   Stylist testStylist2 = new Stylist("Martha");
-  //   testStylist2.save();
-  //   Client testClient1 = new Client("Jessica", testStylist1.getId());
-  //   testClient1.save();
-  //   Client testClient2 = new Client("Joe", testStylist1.getId());
-  //   testClient2.save();
-  //   Client testClient3 = new Client("Bob", testStylist2.getId());
-  //   testClient3.save();
-  //   testStylist1
-  // }
+  @Test
+  public void deleteStylist_deletesStylistFromDBAndReassignsStylistsClients() {
+    Stylist testStylist1 = new Stylist("Becky");
+    testStylist1.save();
+    Stylist testStylist2 = new Stylist("Martha");
+    testStylist2.save();
+    Client testClient1 = new Client("Jessica", testStylist1.getId());
+    testClient1.save();
+    Client testClient2 = new Client("Joe", testStylist1.getId());
+    testClient2.save();
+    Client testClient3 = new Client("Bob", testStylist2.getId());
+    testClient3.save();
+    int testStylist1Id = testStylist1.getId();
+    testStylist1.deleteStylist();
+    assertEquals(null, Stylist.find(testStylist1Id));
+    assertEquals(testStylist2.getId(), Client.find(testClient1.getId()).getStylistId());
+    assertEquals(testStylist2.getId(), Client.find(testClient2.getId()).getStylistId());
+    assertEquals(testStylist2.getId(), Client.find(testClient3.getId()).getStylistId());
+  }
 
 
 }
