@@ -75,4 +75,12 @@ public class Stylist {
     }
   }
 
+  public static Stylist getLowestClientCount() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM stylists AS a ORDER BY (SELECT COUNT(name) FROM clients WHERE stylistId = a.id) asc;";
+      return con.createQuery(sql)
+        .executeAndFetchFirst(Stylist.class);
+    }
+  }
+
 }

@@ -81,4 +81,22 @@ public class ClientTest {
     assertEquals(2, testClient.getStylistId());
   }
 
+  // @Test
+  // public void assignStylist_setsStylistIdEqualsToStylistWithLeastNumberOfClients_true() {
+  //   Stylist testStylist1 = new Stylist("Becky");
+  //   testStylist1.save();
+  //   Stylist testStylist2 = new Stylist("Martha");
+  //   testStylist2.save();
+  //   Client testClient1 = new Client("Jessica", testStylist1.getId());
+  //   testClient1.save();
+  //   Client testClient2 = new Client("Joe", testStylist1.getId());
+  //   testClient2.save();
+  //   Client testClient3 = new Client("Bob", testStylist2.getId());
+  //   testClient3.save();
+  //   Client testClient4 = new Client("Jeff", testStylist1.getId());
+  //   testClient2.save();
+  //   testClient4.assignStylist();
+  //   assertEquals(testClient4.getStylistId(), testStylist2.getId());
+  // }
+
 }

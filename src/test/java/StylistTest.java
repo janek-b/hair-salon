@@ -86,5 +86,20 @@ public class StylistTest {
     assertEquals("Jennifer", testStylist.getName());
   }
 
+  @Test
+  public void getLowestClientCount_returnsStylistWithTheLowestClientCount_testStylist2() {
+    Stylist testStylist1 = new Stylist("Becky");
+    testStylist1.save();
+    Stylist testStylist2 = new Stylist("Martha");
+    testStylist2.save();
+    Client testClient1 = new Client("Jessica", testStylist1.getId());
+    testClient1.save();
+    Client testClient2 = new Client("Joe", testStylist1.getId());
+    testClient2.save();
+    Client testClient3 = new Client("Bob", testStylist2.getId());
+    testClient3.save();
+    assertTrue(Stylist.getLowestClientCount().equals(testStylist2));
+  }
+
 
 }
