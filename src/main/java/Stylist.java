@@ -1,4 +1,5 @@
 import org.sql2o.*;
+import java.util.List;
 
 public class Stylist {
   private String name;
@@ -24,6 +25,24 @@ public class Stylist {
       Stylist newStylist = (Stylist) otherStylist;
       return this.getName().equals(newStylist.getName()) &&
              this.getId() == newStylist.getId();
+    }
+  }
+
+  public void save() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO stylists (name) VALUES (:name);";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", this.name)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static List<Stylist> all() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM stylists;";
+      return con.createQuery(sql)
+        .executeAndFetch(Stylist.class);
     }
   }
 

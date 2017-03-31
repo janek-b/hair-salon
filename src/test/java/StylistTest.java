@@ -26,4 +26,21 @@ public class StylistTest {
     assertTrue(testStylist1.equals(testStylist2));
   }
 
+  @Test
+  public void all_returnsAllStylistsFromDB_true() {
+    Stylist testStylist1 = new Stylist("Becky");
+    testStylist1.save();
+    Stylist testStylist2 = new Stylist("Martha");
+    testStylist2.save();
+    assertTrue(Stylist.all().get(0).equals(testStylist1));
+    assertTrue(Stylist.all().get(1).equals(testStylist2));
+  }
+
+  @Test
+  public void save_savesStylistToDB_true() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    assertTrue(Stylist.all().get(0).equals(testStylist));
+  }
+
 }
