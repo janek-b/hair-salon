@@ -71,8 +71,27 @@ public class App {
     get("/stylists/:id/clients/:clientId", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Client client = Client.find(Integer.parseInt(request.params(":clientId")));
+      model.put("stylists", Stylist.all());
       model.put("client", client);
       model.put("template", "templates/client.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/stylists/:id/clients/:clientId/edit", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String clientName = request.queryParams("clientName");
+      int clientStylist = Integer.parseInt(request.queryParams("clientStylist"));
+      Client client = Client.find(Integer.parseInt(request.params(":clientId")));
+      client.updateClient(clientName, clientStylist);
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/stylists/:id/clients/:clientId/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":clientId")));
+      client.deleteClient();
+      response.redirect("/");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

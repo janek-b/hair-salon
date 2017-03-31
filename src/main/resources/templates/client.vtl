@@ -2,10 +2,9 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="well">
+      <button type="button" class="pull-right btn btn-info" data-toggle="modal" data-target="#clientEditModal">Edit</button>
       <h2>$client.getName()</h2>
-      <h3>Stylist: $client.getStylistName()</h3>
-      <!-- change stylist -->
-      <!-- upcoming appointments -->
+      <h3>Stylist: <a href="/stylists/$client.getStylistId()">$client.getStylistName()</a></h3>
     </div>
     <div class="well">
       <h4>Upcoming Appointments</h4>
@@ -37,6 +36,47 @@
         <input type="time" name="appTime" class="form-control" required step="1800">
         <button type="submit" class="btn btn-primary">Schedule</button>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="clientEditModal" tabindex="-1" role="dialog" aria-labelledby="clientEditModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="clientEditModalLabel">Edit Client</h4>
+      </div>
+      <div class="modal-body">
+        <form id="clientEditForm" action="/stylists/$client.getStylistId()/clients/$client.getId()/edit" method="post">
+          <label for="clientName">Name:</label>
+          <input type="text" name="clientName" class="form-control" value="$client.getName()"required>
+          <label for="clientStylist">Assign a Stylist</label>
+          <select class="form-control" name="clientStylist" required>
+            <option value="$autoStylist.getId()">Auto-assign Stylist</option>
+            #foreach($stylist in $stylists)
+              #if($stylist.getId() == $client.getStylistId())
+                <option selected value="$stylist.getId()">$stylist.getName()</option>
+              #else
+                <option value="$stylist.getId()">$stylist.getName()</option>
+              #end
+            #end
+          </select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-4">
+            <form action="/stylists/$client.getStylistId()/clients/$client.getId()/delete" method="post">
+              <button type="submit" class="pull-left btn btn-danger">Delete Client</button>
+            </form>
+          </div>
+          <div class="col-md-6 col-md-offset-2">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" form="clientEditForm" class="btn btn-success">Submit Changes</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
