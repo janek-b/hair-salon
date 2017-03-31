@@ -135,4 +135,13 @@ public class Appointment {
     }
   }
 
+  public String getStylistName() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT name FROM stylists WHERE id = :stylistId;";
+      return con.createQuery(sql)
+        .addParameter("stylistId", this.stylistId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
 }

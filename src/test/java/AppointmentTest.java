@@ -134,4 +134,15 @@ public class AppointmentTest {
     assertFalse(Appointment.getDaysAppointment("2017-03-16").contains(testAppointment3));
   }
 
+  @Test
+  public void getStylistName_returnsNameOfAssignedStylist_Becky() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Client testClient = new Client("Jessica", testStylist.getId());
+    testClient.save();
+    Appointment testAppointment = new Appointment(testClient.getId(), testStylist.getId(), "2017-04-13", "15:30:00");
+    testAppointment.save();
+    assertEquals("Becky", testAppointment.getStylistName());
+  }
+
 }
