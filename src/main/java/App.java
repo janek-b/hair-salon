@@ -14,6 +14,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("stylists", Stylist.all());
       model.put("appointmentsToday", Appointment.getDaysAppointment(LocalDate.now().toString()));
+      model.put("appointmentsTomorrow", Appointment.getDaysAppointment(LocalDate.now().plusDays(1).toString()));
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
