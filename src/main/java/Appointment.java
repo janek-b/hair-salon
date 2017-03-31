@@ -7,14 +7,14 @@ public class Appointment {
   private int id;
   private int clientId;
   private int stylistId;
-  private Date appDate;
-  private Time appTime;
+  private String appDate;
+  private String appTime;
 
   public Appointment(int clientId, int stylistId, String appDate, String appTime) {
     this.clientId = clientId;
     this.stylistId = stylistId;
-    this.appDate = Date.valueOf(appDate);
-    this.appTime = Time.valueOf(appTime);
+    this.appDate = appDate;
+    this.appTime = appTime;
   }
 
   public int getClientId() {
@@ -25,11 +25,11 @@ public class Appointment {
     return this.stylistId;
   }
 
-  public Date getDate() {
+  public String getDate() {
     return this.appDate;
   }
 
-  public Time getTime() {
+  public String getTime() {
     return this.appTime;
   }
 
@@ -61,7 +61,7 @@ public class Appointment {
 
   public void save() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO appointments (clientId, stylistId, appDate, appTime) VALUES (:clientId, :stylistId, :appDate, :appTime);";
+      String sql = "INSERT INTO appointments (clientId, stylistId, appDate, appTime) VALUES (:clientId, :stylistId, CAST(:appDate as date), CAST(:appTime as time));";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("clientId", this.clientId)
         .addParameter("stylistId", this.stylistId)
@@ -82,10 +82,10 @@ public class Appointment {
   }
 
   public void updateAppointment(String appDate, String appTime) {
-    this.appDate = Date.valueOf(appDate);
-    this.appTime = Time.valueOf(appTime);
+    this.appDate = appDate;
+    this.appTime = appTime;
     try (Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE appointments SET (appDate, appTime) = (:appDate, :appTime) WHERE id = :id;";
+      String sql = "UPDATE appointments SET (appDate, appTime) = (CAST(:appDate as date), CAST(:appTime as time)) WHERE id = :id;";
       con.createQuery(sql)
         .addParameter("appDate", this.appDate)
         .addParameter("appTime", this.appTime)

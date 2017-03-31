@@ -4,7 +4,24 @@
     <div class="well">
       <h2>$client.getName()</h2>
       <h3>Stylist: $client.getStylistName()</h3>
-      <!-- upcomding appointments -->
+      <!-- change stylist -->
+      <!-- upcoming appointments -->
+    </div>
+    <div class="well">
+      <h4>Upcoming Appointments</h4>
+      #foreach($appointment in $client.getAppointments())
+        <p>$appointment.getDate() at $appointment.getTime()</p>
+      #end
+    </div>
+    <div class="well">
+      <h4>Schedule an Appointment</h4>
+      <form action="/stylists/$client.getStylistId()/clients/$client.getId()/appointments/new" method="post">
+        <label for="appDate">Select a Date</label>
+        <input type="date" name="appDate" class="form-control" required>
+        <label for="appTime">Select a Time</label>
+        <input type="time" name="appTime" class="form-control" required step="1800">
+        <button type="submit" class="btn btn-primary">Schedule</button>
+      </form>
     </div>
   </div>
 </div>

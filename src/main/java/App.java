@@ -73,6 +73,20 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/stylists/:id/clients/:clientId/appointments/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":clientId")));
+      String appDate = request.queryParams("appDate");
+      String appTime = request.queryParams("appTime");
+      System.out.println(appDate);
+      System.out.println(appTime);
+      Appointment newAppointment = new Appointment(client.getId(), client.getStylistId(), appDate, appTime);
+      newAppointment.save();
+      String url = String.format("/stylists/%d/clients/%d", client.getStylistId(), client.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
 
 
   }

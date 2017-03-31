@@ -30,15 +30,15 @@ public class AppointmentTest {
   @Test
   public void getDate_returnsCorrectDate_Date() {
     Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
-    Date testDate = Date.valueOf("2017-03-16");
-    assertEquals(testDate, testAppointment.getDate());
+    // Date testDate = Date.valueOf("2017-03-16");
+    assertEquals("2017-03-16", testAppointment.getDate());
   }
 
   @Test
   public void getTime_returnsCorrectTime_Time() {
     Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
-    Time testTime = Time.valueOf("01:30:00");
-    assertEquals(testTime, testAppointment.getTime());
+    // Time testTime = Time.valueOf("01:30:00");
+    assertEquals("01:30:00", testAppointment.getTime());
   }
 
   @Test
@@ -93,10 +93,10 @@ public class AppointmentTest {
     testAppointment.updateAppointment("2017-04-16", "09:30:00");
     Date testDate = Date.valueOf("2017-04-16");
     Time testTime = Time.valueOf("09:30:00");
-    assertEquals(testDate, testAppointment.getDate());
-    assertEquals(testDate, Appointment.find(testAppointment.getId()).getDate());
-    assertEquals(testTime, testAppointment.getTime());
-    assertEquals(testTime, Appointment.find(testAppointment.getId()).getTime());
+    assertEquals("2017-04-16", testAppointment.getDate());
+    assertEquals("2017-04-16", Appointment.find(testAppointment.getId()).getDate());
+    assertEquals("09:30:00", testAppointment.getTime());
+    assertEquals("09:30:00", Appointment.find(testAppointment.getId()).getTime());
   }
 
   @Test
