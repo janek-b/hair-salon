@@ -79,9 +79,11 @@ public class AppointmentTest {
     assertTrue(testAppointment.getId() > 0);
   }
 
-  // @Test
-  // public void find_returnsAppointmentWithSameId_true() {
-  //
-  // }
+  @Test
+  public void find_returnsAppointmentWithSameId_true() {
+    Appointment testAppointment = new Appointment(1, 1, "2017-03-16", "01:30:00");
+    testAppointment.save();
+    assertEquals(testAppointment, Appointment.find(testAppointment.getId()));
+  }
 
 }
