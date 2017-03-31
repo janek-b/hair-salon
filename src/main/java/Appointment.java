@@ -2,6 +2,7 @@ import org.sql2o.*;
 import java.sql.Time;
 import java.sql.Date;
 import java.util.List;
+import java.text.DateFormat;
 
 public class Appointment {
   private int id;
@@ -101,6 +102,17 @@ public class Appointment {
         .addParameter("id", this.id)
         .executeUpdate();
     }
+  }
+
+  public String getFormatDate() {
+    Date date;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT appDate FROM appointments WHERE id = :id;";
+      date = con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetchFirst(Date.class);
+    }
+    return DateFormat.getDateInstance().format(date);
   }
 
 }
