@@ -21,8 +21,10 @@ public class ClientTest {
 
   @Test
   public void getStylistId_returnsClientStylistId_1() {
-    Client testClient = new Client("Jessica", 1);
-    assertEquals(1, testClient.getStylistId());
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Client testClient = new Client("Jessica", testStylist.getId());
+    assertEquals(testStylist.getId(), testClient.getStylistId());
   }
 
   @Test
@@ -108,5 +110,13 @@ public class ClientTest {
     assertEquals(testStylist2.getId(), Client.find(testClient4.getId()).getStylistId());
     assertEquals(testStylist2.getId(), testClient4.getStylistId());
   }
+
+  // @Test
+  // public void getStylistName_returnsNameOfAssignedStylist_Becky() {
+  //   Stylist testStylist = new Stylist("Becky");
+  //   testStylist.save();
+  //   Client testClient = new Client("Jessica", testStylist.getId());
+  //   testClient.save();
+  // }
 
 }
