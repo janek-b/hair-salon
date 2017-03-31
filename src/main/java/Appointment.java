@@ -3,6 +3,7 @@ import java.sql.Time;
 import java.sql.Date;
 import java.util.List;
 import java.text.DateFormat;
+import java.time.LocalDate;
 
 public class Appointment {
   private int id;
@@ -150,6 +151,16 @@ public class Appointment {
       return con.createQuery(sql)
         .addParameter("clientId", this.clientId)
         .executeAndFetchFirst(String.class);
+    }
+  }
+
+  public static List<Appointment> upcomingAppointments() {
+    String today = LocalDate.now().toString();
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE appDate >= CAST(:today as date) ORDER BY appDate asc;";
+      return con.createQuery(sql)
+        .addParameter("today", today)
+        .executeAndFetch(Appointment.class);
     }
   }
 

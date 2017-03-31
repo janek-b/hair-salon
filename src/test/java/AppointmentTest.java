@@ -156,4 +156,20 @@ public class AppointmentTest {
     assertEquals("Jessica", testAppointment.getClientName());
   }
 
+  @Test
+  public void upcomingAppointments_returnsOrderedListOfAppointments_List() {
+    Appointment testAppointment1 = new Appointment(1, 2, "2017-03-31", "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(1, 1, "2017-04-01", "01:30:00");
+    testAppointment2.save();
+    Appointment testAppointment3 = new Appointment(1, 1, "2017-04-01", "05:30:00");
+    testAppointment3.save();
+    Appointment testAppointment4 = new Appointment(1, 1, "2017-03-01", "05:30:00");
+    testAppointment4.save();
+    assertTrue(Appointment.upcomingAppointments().get(0).equals(testAppointment1));
+    assertTrue(Appointment.upcomingAppointments().get(1).equals(testAppointment2));
+    assertTrue(Appointment.upcomingAppointments().get(2).equals(testAppointment3));
+    assertFalse(Appointment.upcomingAppointments().contains(testAppointment4));
+  }
+
 }

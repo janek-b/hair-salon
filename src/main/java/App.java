@@ -90,7 +90,12 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-
+    get("/appointments", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("appointments", Appointment.all());
+      model.put("template", "templates/appointments.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
   }
 }
