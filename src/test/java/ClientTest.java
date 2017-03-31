@@ -19,4 +19,10 @@ public class ClientTest {
     assertEquals("Jessica", testClient.getName());
   }
 
+  @Test
+  public void getStylistId_returnsClientStylistId_1() {
+    Client testClient = new Client("Jessica", 1);
+    assertEquals(1, testClient.getStylistId());
+  }
+
 }
