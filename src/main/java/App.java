@@ -33,13 +33,6 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/stylists/:id", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
-
-      model.put("template", "templates/stylist.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
     post("/clients/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String clientName = request.queryParams("clientName");
@@ -49,6 +42,26 @@ public class App {
       response.redirect("/admin");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    get("/stylists/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Stylist stylist = Stylist.find(Integer.parseInt(request.params(":id")));
+      model.put("stylist", stylist);
+      model.put("template", "templates/stylist.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/stylists/:id/clients/:clientId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Stylist stylist = Stylist.find(Integer.parseInt(request.params(":id")));
+      Client client = Client.find(Integer.parseInt(request.params(":clientId")));
+      model.put("stylist", stylist);
+      model.put("client", client);
+      model.put("template", "templates/client.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
 
   }
 }

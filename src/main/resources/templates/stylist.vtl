@@ -1,3 +1,16 @@
 <!--stylist.vtl-->
-
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well">
+      <h2>$stylist.getName()</h2>
+      <h3>Clients:</h3>
+      <ul>
+        #foreach($client in $stylist.getClients())
+          <li><a href="/stylists/$stylist.getId()/clients/$client.getId()">$client.getName()</a></li>
+        #end
+      </ul>
+      <!-- upcoming appointsment -->
+    </div>
+  </div>
+</div>
 <!--stylist.vtl-->
