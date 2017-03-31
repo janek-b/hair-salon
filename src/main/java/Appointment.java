@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import java.sql.Time;
 import java.sql.Date;
+import java.util.List;
 
 public class Appointment {
   private int id;
@@ -47,6 +48,27 @@ public class Appointment {
              this.getDate().equals(newAppointment.getDate()) &&
              this.getTime().equals(newAppointment.getTime()) &&
              this.getId() == newAppointment.getId();
+    }
+  }
+
+  public static List<Appointment> all() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments;";
+      return con.createQuery(sql)
+        .executeAndFetch(Appointment.class);
+    }
+  }
+
+  public void save() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO appointments (clientId, stylistId, appDate, appTime) VALUES (:clientId, :stylistId, :appDate, :appTime);";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("clientId", this.clientId)
+        .addParameter("stylistId", this.stylistId)
+        .addParameter("appDate", this.appDate)
+        .addParameter("appTime", this.appTime)
+        .executeUpdate()
+        .getKey();
     }
   }
 
