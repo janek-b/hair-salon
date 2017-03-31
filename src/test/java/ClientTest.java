@@ -2,6 +2,7 @@ import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Arrays;
+import java.time.LocalDate;
 
 public class ClientTest {
 
@@ -125,11 +126,11 @@ public class ClientTest {
   public void getUpcomingAppointments_returnsAllAppointmentsForAClient() {
     Client testClient = new Client("Jessica", 1);
     testClient.save();
-    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, "2017-04-16", "16:30:00");
+    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, LocalDate.now().plusDays(2).toString(), "16:30:00");
     testAppointment1.save();
-    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, "2017-04-18", "16:30:00");
+    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, LocalDate.now().plusDays(9).toString(), "16:30:00");
     testAppointment2.save();
-    Appointment testAppointment3 = new Appointment(testClient.getId(), 1, "2017-03-16", "01:30:00");
+    Appointment testAppointment3 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(9).toString(), "01:30:00");
     testAppointment3.save();
     assertTrue(testClient.getUpcomingAppointments().get(0).equals(testAppointment1));
     assertTrue(testClient.getUpcomingAppointments().get(1).equals(testAppointment2));
@@ -140,11 +141,11 @@ public class ClientTest {
   public void getPastAppointments_returnsAllAppointmentsForAClient() {
     Client testClient = new Client("Jessica", 1);
     testClient.save();
-    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, "2017-03-16", "16:30:00");
+    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(4).toString(), "16:30:00");
     testAppointment1.save();
-    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, "2017-02-18", "16:30:00");
+    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(9).toString(), "16:30:00");
     testAppointment2.save();
-    Appointment testAppointment3 = new Appointment(testClient.getId(), 1, "2017-04-16", "01:30:00");
+    Appointment testAppointment3 = new Appointment(testClient.getId(), 1, LocalDate.now().plusDays(9).toString(), "01:30:00");
     testAppointment3.save();
     assertTrue(testClient.getPastAppointments().get(0).equals(testAppointment1));
     assertTrue(testClient.getPastAppointments().get(1).equals(testAppointment2));

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.sql.Time;
 import java.sql.Date;
 import java.util.Arrays;
+import java.time.LocalDate;
 
 public class AppointmentTest {
 
@@ -158,13 +159,13 @@ public class AppointmentTest {
 
   @Test
   public void upcomingAppointments_returnsOrderedListOfAppointments_List() {
-    Appointment testAppointment1 = new Appointment(1, 2, "2017-03-31", "16:30:00");
+    Appointment testAppointment1 = new Appointment(1, 2, LocalDate.now().plusDays(1).toString(), "16:30:00");
     testAppointment1.save();
-    Appointment testAppointment2 = new Appointment(1, 1, "2017-04-01", "01:30:00");
+    Appointment testAppointment2 = new Appointment(1, 1, LocalDate.now().plusDays(4).toString(), "01:30:00");
     testAppointment2.save();
-    Appointment testAppointment3 = new Appointment(1, 1, "2017-04-01", "05:30:00");
+    Appointment testAppointment3 = new Appointment(1, 1, LocalDate.now().plusDays(4).toString(), "05:30:00");
     testAppointment3.save();
-    Appointment testAppointment4 = new Appointment(1, 1, "2017-03-01", "05:30:00");
+    Appointment testAppointment4 = new Appointment(1, 1, LocalDate.now().minusDays(4).toString(), "05:30:00");
     testAppointment4.save();
     assertTrue(Appointment.upcomingAppointments().get(0).equals(testAppointment1));
     assertTrue(Appointment.upcomingAppointments().get(1).equals(testAppointment2));

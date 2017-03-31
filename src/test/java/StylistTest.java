@@ -2,6 +2,7 @@ import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Arrays;
+import java.time.LocalDate;
 
 public class StylistTest {
 
@@ -132,15 +133,33 @@ public class StylistTest {
   }
 
   @Test
-  public void getAppointments_returnsAllAppointmentsForAStylist() {
+  public void getUpcomingAppointments_returnsAllAppointmentsForAStylist() {
     Stylist testStylist = new Stylist("Becky");
     testStylist.save();
-    Appointment testAppointment1 = new Appointment(1, testStylist.getId(), "2017-04-16", "16:30:00");
+    Appointment testAppointment1 = new Appointment(1, testStylist.getId(), LocalDate.now().plusDays(2).toString(), "16:30:00");
     testAppointment1.save();
-    Appointment testAppointment2 = new Appointment(1, testStylist.getId(), "2017-03-16", "01:30:00");
+    Appointment testAppointment2 = new Appointment(1, testStylist.getId(), LocalDate.now().plusDays(9).toString(), "16:30:00");
     testAppointment2.save();
-    Appointment[] appointments = new Appointment[] {testAppointment1, testAppointment2};
-    assertTrue(testStylist.getAppointments().containsAll(Arrays.asList(appointments)));
+    Appointment testAppointment3 = new Appointment(1, testStylist.getId(), LocalDate.now().minusDays(9).toString(), "01:30:00");
+    testAppointment3.save();
+    assertTrue(testStylist.getUpcomingAppointments().get(0).equals(testAppointment1));
+    assertTrue(testStylist.getUpcomingAppointments().get(1).equals(testAppointment2));
+    assertFalse(testStylist.getUpcomingAppointments().contains(testAppointment3));
+  }
+
+  @Test
+  public void getPastAppointments_returnsAllAppointmentsForAStylist() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Appointment testAppointment1 = new Appointment(1, testStylist.getId(), LocalDate.now().minusDays(1).toString(), "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(1, testStylist.getId(), LocalDate.now().minusDays(9).toString(), "16:30:00");
+    testAppointment2.save();
+    Appointment testAppointment3 = new Appointment(1, testStylist.getId(), LocalDate.now().plusDays(9).toString(), "01:30:00");
+    testAppointment3.save();
+    assertTrue(testStylist.getPastAppointments().get(0).equals(testAppointment1));
+    assertTrue(testStylist.getPastAppointments().get(1).equals(testAppointment2));
+    assertFalse(testStylist.getPastAppointments().contains(testAppointment3));
   }
 
 }
