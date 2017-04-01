@@ -88,6 +88,10 @@ public class App {
     get("/stylists/:id/clients/:clientId", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Client client = Client.find(Integer.parseInt(request.params(":clientId")));
+      String[] timeslots = {"10:00:00", "10:30:00", "11:00:00", "11:30:00", "12:00:00", "12:30:00", "01:00:00", "01:30:00", "02:00:00", "02:30:00", "03:00:00", "03:30:00", "04:00:00", "04:30:00", "05:00:00", "05:30:00", "06:00:00", "06:30:00", "07:00:00", "07:30:00"};
+      model.put("timeslots", timeslots);
+      model.put("date", request.session().attribute("date"));
+      model.put("clientStylist", Stylist.find(client.getStylistId()));
       model.put("stylists", Stylist.all());
       model.put("client", client);
       model.put("template", "templates/client.vtl");
@@ -120,6 +124,7 @@ public class App {
       Appointment newAppointment = new Appointment(client.getId(), client.getStylistId(), appDate, appTime);
       newAppointment.save();
       String url = String.format("/stylists/%d/clients/%d", client.getStylistId(), client.getId());
+      request.session().removeAttribute("date");
       response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -155,6 +160,13 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("appointments", Appointment.upcomingAppointments());
       model.put("template", "templates/appointments.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/setdate/:date", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      request.session().attribute("date", request.params(":date"));
+      response.redirect(request.headers("Referer"));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

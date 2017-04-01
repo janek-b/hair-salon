@@ -174,4 +174,14 @@ public class StylistTest {
     assertTrue(testStylist.getAllAppointments().containsAll(Arrays.asList(appointments)));
   }
 
+  @Test
+  public void timeslotAvailable_ifGivenTimeslotIsNotTaken_true() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Appointment testAppointment1 = new Appointment(1, testStylist.getId(), "2017-03-16", "16:30:00");
+    testAppointment1.save();
+    assertTrue(testStylist.timeslotAvailable("2017-03-16", "16:00:00"));
+    assertFalse(testStylist.timeslotAvailable("2017-03-16", "16:30:00"));
+  }
+
 }

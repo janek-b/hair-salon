@@ -128,4 +128,21 @@ public class Stylist {
     }
   }
 
+  public boolean timeslotAvailable(String date, String time) {
+    Appointment app;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE stylistId = :id AND appDate = CAST(:date as date) AND appTime = CAST(:time as time);";
+      app = con.createQuery(sql)
+        .addParameter("id", this.id)
+        .addParameter("date", date)
+        .addParameter("time", time)
+        .executeAndFetchFirst(Appointment.class);
+    }
+    if (app instanceof Appointment) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }

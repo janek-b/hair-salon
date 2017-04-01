@@ -17,9 +17,9 @@
           </tr>
           #foreach($appointment in $client.getUpcomingAppointments())
             <tr>
-              <td>$appointment.getFormatDate()</td>
-              <td>$appointment.getFormatTime()</td>
-              <td>$appointment.getStylistName()</td>
+              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatDate()</a></td>
+              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatTime()</a></td>
+              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getStylistName()</a></td>
             </tr>
           #end
         </table>
@@ -31,9 +31,20 @@
       <h4>Schedule an Appointment</h4>
       <form action="/stylists/$client.getStylistId()/clients/$client.getId()/appointments/new" method="post">
         <label for="appDate">Select a Date</label>
-        <input type="date" name="appDate" class="form-control" required>
-        <label for="appTime">Select a Time</label>
-        <input type="time" name="appTime" class="form-control" required step="1800">
+        <input value="$date" type="date" id="appDate" name="appDate" class="form-control" onchange="setDate();" required>
+        #if($date)
+          <label for="appTime">Select a Time</label>
+          <div class="form-group">
+            #foreach($timeslot in $timeslots)
+              #if($clientStylist.timeslotAvailable($date, $timeslot))
+                <label class="radio-inline">
+                  <input type="radio" name="appTime" value="$timeslot"> $timeslot
+                </label>
+              #end
+            #end
+          </div>
+        #end
+        <!-- <input type="time" name="appTime" class="form-control" required step="1800"> -->
         <button type="submit" class="btn btn-primary">Schedule</button>
       </form>
     </div>
