@@ -78,6 +78,10 @@ public class Client {
   }
 
   public void deleteClient() {
+    List<Appointment> appointments = this.getAllAppointments();
+    for (Appointment appointment: appointments) {
+      appointment.deleteAppointment();
+    }
     try (Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM clients WHERE id = :id;";
       con.createQuery(sql)
@@ -87,12 +91,21 @@ public class Client {
   }
 
   public void assignStylist() {
+    int oldStylistId = this.stylistId;
     this.stylistId = Stylist.getLowestClientCount().getId();
     try (Connection con = DB.sql2o.open()) {
       String sql = "UPDATE clients SET stylistId = :stylistId WHERE id = :id;";
       con.createQuery(sql)
         .addParameter("stylistId", this.stylistId)
         .addParameter("id", this.id)
+        .executeUpdate();
+    }
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE appointments SET stylistId = :stylistId WHERE clientId = :id AND stylistId = :oldStylistId;";
+      con.createQuery(sql)
+        .addParameter("stylistId", this.stylistId)
+        .addParameter("id", this.id)
+        .addParameter("oldStylistId", oldStylistId)
         .executeUpdate();
     }
   }
@@ -124,6 +137,15 @@ public class Client {
       return con.createQuery(sql)
         .addParameter("id", this.id)
         .addParameter("today", today)
+        .executeAndFetch(Appointment.class);
+    }
+  }
+
+  public List<Appointment> getAllAppointments() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE clientId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
         .executeAndFetch(Appointment.class);
     }
   }

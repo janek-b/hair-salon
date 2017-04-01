@@ -12,10 +12,10 @@
         </tr>
         #foreach($appointment in $appointments)
           <tr>
-            <td>$appointment.getFormatDate()</td>
-            <td>$appointment.getFormatTime()</td>
-            <td>$appointment.getClientName()</td>
-            <td>$appointment.getStylistName()</td>
+            <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatDate()</a></td>
+            <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatTime()</a></td>
+            <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getClientName()</a></td>
+            <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getStylistName()</a></td>
           </tr>
         #end
       </table>

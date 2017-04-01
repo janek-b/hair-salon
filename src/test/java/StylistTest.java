@@ -162,4 +162,16 @@ public class StylistTest {
     assertFalse(testStylist.getPastAppointments().contains(testAppointment3));
   }
 
+  @Test
+  public void getAllAppointments_returnsAllAppointmentsForAStylist() {
+    Stylist testStylist = new Stylist("Becky");
+    testStylist.save();
+    Appointment testAppointment1 = new Appointment(1, testStylist.getId(), LocalDate.now().minusDays(1).toString(), "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(1, testStylist.getId(), LocalDate.now().minusDays(9).toString(), "16:30:00");
+    testAppointment2.save();
+    Appointment[] appointments = new Appointment[] {testAppointment1, testAppointment2};
+    assertTrue(testStylist.getAllAppointments().containsAll(Arrays.asList(appointments)));
+  }
+
 }

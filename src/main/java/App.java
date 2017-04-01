@@ -126,6 +126,13 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/stylists/:id/clients/:clientId/appointments/new/:appointmentId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("appointment", Appointment.find(Integer.parseInt(request.params(":appointmentId"))));
+      model.put("template", "templates/appointment.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     get("/appointments", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("appointments", Appointment.upcomingAppointments());

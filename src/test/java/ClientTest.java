@@ -152,4 +152,56 @@ public class ClientTest {
     assertFalse(testClient.getPastAppointments().contains(testAppointment3));
   }
 
+  @Test
+  public void getAllAppointments_returnsAllAppointmentsForAClient() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(4).toString(), "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(9).toString(), "16:30:00");
+    testAppointment2.save();
+    Appointment[] appointments = new Appointment[] {testAppointment1, testAppointment2};
+    assertTrue(testClient.getAllAppointments().containsAll(Arrays.asList(appointments)));
+  }
+
+  @Test
+  public void deleteClient_removesAllClientAppointmentsFromDB_true() {
+    Client testClient = new Client("Jessica", 1);
+    testClient.save();
+    Appointment testAppointment1 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(4).toString(), "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(testClient.getId(), 1, LocalDate.now().minusDays(9).toString(), "16:30:00");
+    testAppointment2.save();
+    int testClientId = testClient.getId();
+    int testAppointment1Id = testAppointment1.getId();
+    int testAppointment2Id = testAppointment2.getId();
+    testClient.deleteClient();
+    assertEquals(null, Client.find(testClientId));
+    assertEquals(null, Appointment.find(testAppointment1Id));
+    assertEquals(null, Appointment.find(testAppointment2Id));
+  }
+
+  @Test
+  public void assignStylist_reassignsAppointmentStylistIdToNewStylist_true() {
+    Stylist testStylist1 = new Stylist("Becky");
+    testStylist1.save();
+    Stylist testStylist2 = new Stylist("Martha");
+    testStylist2.save();
+    Client testClient1 = new Client("Jessica", testStylist1.getId());
+    testClient1.save();
+    Client testClient2 = new Client("Joe", testStylist1.getId());
+    testClient2.save();
+    Client testClient3 = new Client("Bob", testStylist2.getId());
+    testClient3.save();
+    Client testClient4 = new Client("Jeff", testStylist1.getId());
+    testClient4.save();
+    Appointment testAppointment1 = new Appointment(testClient4.getId(), testStylist1.getId(), LocalDate.now().minusDays(4).toString(), "16:30:00");
+    testAppointment1.save();
+    Appointment testAppointment2 = new Appointment(testClient4.getId(), testStylist1.getId(), LocalDate.now().minusDays(9).toString(), "16:30:00");
+    testAppointment2.save();
+    testClient4.assignStylist();
+    assertEquals(Appointment.find(testAppointment1.getId()).getStylistId(), testStylist2.getId());
+    assertEquals(Appointment.find(testAppointment2.getId()).getStylistId(), testStylist2.getId());
+  }
+
 }

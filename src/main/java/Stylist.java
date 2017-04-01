@@ -119,4 +119,13 @@ public class Stylist {
     }
   }
 
+  public List<Appointment> getAllAppointments() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM appointments WHERE stylistId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Appointment.class);
+    }
+  }
+
 }
