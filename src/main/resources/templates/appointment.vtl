@@ -2,7 +2,48 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="well">
+      <button type="button" class="pull-right btn btn-info" data-toggle="modal" data-target="#appointmentEditModal">Edit</button>
       <h3>Appointment Details</h3>
+      <h4>Date: $appointment.getFormatDate()</h4>
+      <h4>Time: $appointment.getFormatTime()</h4>
+      <h4>Client: <a href="/stylists/$appointment.getStylistId()/client/$appointment.getClientId()">$appointment.getClientName()</a></h4>
+      <h4>Stylist: <a href="/stylists/$appointment.getStylistId()">$appointment.getStylistName()</a></h4>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="appointmentEditModal" tabindex="-1" role="dialog" aria-labelledby="appointmentEditModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="appointmentEditModalLabel">Edit Appointment</h4>
+      </div>
+      <div class="modal-body">
+
+        <form id="appointmentEditForm"  action="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()/edit" method="post">
+          <label for="appDate">Select a Date</label>
+          <input value="$appointment.getDate()" type="date" name="appDate" class="form-control" required>
+          <label for="appTime">Select a Time</label>
+          <input value="$appointment.getTime()" type="time" name="appTime" class="form-control" required step="1800">
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <div class="row">
+          <div class="col-md-4">
+            <form action="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()/delete" method="post">
+              <button type="submit" class="pull-left btn btn-danger">Cancel Appointment</button>
+            </form>
+          </div>
+          <div class="col-md-6 col-md-offset-2">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" form="appointmentEditForm" class="btn btn-success">Submit Changes</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

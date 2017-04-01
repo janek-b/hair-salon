@@ -117,8 +117,6 @@ public class App {
       Client client = Client.find(Integer.parseInt(request.params(":clientId")));
       String appDate = request.queryParams("appDate");
       String appTime = request.queryParams("appTime");
-      System.out.println(appDate);
-      System.out.println(appTime);
       Appointment newAppointment = new Appointment(client.getId(), client.getStylistId(), appDate, appTime);
       newAppointment.save();
       String url = String.format("/stylists/%d/clients/%d", client.getStylistId(), client.getId());
@@ -126,10 +124,30 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/stylists/:id/clients/:clientId/appointments/new/:appointmentId", (request, response) -> {
+    get("/stylists/:id/clients/:clientId/appointments/:appointmentId", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("appointment", Appointment.find(Integer.parseInt(request.params(":appointmentId"))));
       model.put("template", "templates/appointment.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/stylists/:id/clients/:clientId/appointments/:appointmentId/edit", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Appointment appointment = Appointment.find(Integer.parseInt(request.params(":appointmentId")));
+      String appDate = request.queryParams("appDate");
+      String appTime = request.queryParams("appTime");
+      appointment.updateAppointment(appDate, appTime);
+      String url = String.format("/stylists/%d/clients/%d/appointments/%d", appointment.getStylistId(), appointment.getClientId(), appointment.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/stylists/:id/clients/:clientId/appointments/:appointmentId/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Appointment appointment = Appointment.find(Integer.parseInt(request.params(":appointmentId")));
+      String url = String.format("/stylists/%d/clients/%d", appointment.getStylistId(), appointment.getClientId());
+      appointment.deleteAppointment();
+      response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
