@@ -12,6 +12,13 @@
   </div>
 </div>
 
+#if($date)
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#appointmentEditModal').modal('show');
+    });
+  </script>
+#end
 <div class="modal fade" id="appointmentEditModal" tabindex="-1" role="dialog" aria-labelledby="appointmentEditModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -23,9 +30,29 @@
 
         <form id="appointmentEditForm"  action="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()/edit" method="post">
           <label for="appDate">Select a Date</label>
-          <input value="$appointment.getDate()" type="date" name="appDate" class="form-control" required>
+          #if($date)
+            #set($selectDate = $date)
+          #else
+            #set($selectDate = $appointment.getDate())
+          #end
+          <input value="$selectDate" type="date" name="appDate" class="appDate form-control" onchange="setDate();" required>
           <label for="appTime">Select a Time</label>
-          <input value="$appointment.getTime()" type="time" name="appTime" class="form-control" required step="1800">
+          <div class="form-group">
+            #foreach($timeslot in $timeslots)
+              #if($appointment.getTime() == $timeslot && $appointment.getDate() == $selectDate)
+                <label class="radio-inline">
+                  <input checked type="radio" name="appTime" value="$timeslot"> $timeslot
+                </label>
+              #elseif($clientStylist.timeslotAvailable($selectDate, $timeslot))
+                <label class="radio-inline">
+                  <input type="radio" name="appTime" value="$timeslot"> $timeslot
+                </label>
+              #end
+            #end
+          </div>
+          <!-- <input value="$appointment.getDate()" type="date" name="appDate" class="form-control" required>
+          <label for="appTime">Select a Time</label>
+          <input value="$appointment.getTime()" type="time" name="appTime" class="form-control" required step="1800"> -->
         </form>
 
       </div>
