@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
 .well {
   box-shadow: 1px 1px 5px black;
   background-color: white;
+  color: #353535;
 }
 
 h4 {
@@ -71,4 +74,10 @@ table#appTable tr th {
 
 #appEditForm {
   display: none;
+}
+
+
+body {
+  font-family: 'Source Code Pro', monospace;
+  background-color: #D2D7DF;
 }
