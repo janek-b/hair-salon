@@ -3,6 +3,9 @@
   background-color: white;
 }
 
+h4 {
+  text-align: center;
+}
 
 div label input {
   margin-right: 100px;

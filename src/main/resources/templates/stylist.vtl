@@ -23,9 +23,9 @@
           </tr>
           #foreach($appointment in $stylist.getUpcomingAppointments())
             <tr>
-              <td>$appointment.getFormatDate()</td>
-              <td>$appointment.getFormatTime()</td>
-              <td>$appointment.getClientName()</td>
+              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatDate()</a></td>
+              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatTime()</a></td>
+              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getClientName()</a></td>
             </tr>
           #end
         </table>

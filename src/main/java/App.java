@@ -160,11 +160,11 @@ public class App {
     post("/stylists/:id/clients/:clientId/appointments/:appointmentId/edit", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Appointment appointment = Appointment.find(Integer.parseInt(request.params(":appointmentId")));
-      String appDate = request.queryParams("appDate");
-      String appTime = request.queryParams("appTime");
+      String[] appDateTime = request.queryParams("appDateTime").split(" ");
+      String appDate = appDateTime[0];
+      String appTime = appDateTime[1];
       appointment.updateAppointment(appDate, appTime);
       String url = String.format("/stylists/%d/clients/%d/appointments/%d", appointment.getStylistId(), appointment.getClientId(), appointment.getId());
-      request.session().removeAttribute("date");
       response.redirect(url);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
