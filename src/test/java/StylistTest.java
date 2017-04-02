@@ -184,4 +184,17 @@ public class StylistTest {
     assertFalse(testStylist.timeslotAvailable("2017-03-16", "16:30:00"));
   }
 
+  @Test
+  public void searchStylist_returnsAllStylistsWithMatchingName_List() {
+    Stylist testStylist1 = new Stylist("Becky");
+    testStylist1.save();
+    Stylist testStylist2 = new Stylist("Martha");
+    testStylist2.save();
+    Stylist testStylist3 = new Stylist("Maggie");
+    testStylist3.save();
+    Stylist[] stylists = new Stylist[] {testStylist2, testStylist3};
+    assertTrue(Stylist.searchStylist("ma").containsAll(Arrays.asList(stylists)));
+    assertFalse(Stylist.searchStylist("ma").contains(testStylist1));
+  }
+
 }

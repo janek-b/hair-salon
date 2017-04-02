@@ -150,4 +150,14 @@ public class Client {
     }
   }
 
+  public static List<Client> searchClient(String input) {
+    String newInput = "%" + input + "%";
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM clients WHERE lower(name) LIKE lower(:input) ORDER BY name asc;";
+      return con.createQuery(sql)
+        .addParameter("input", newInput)
+        .executeAndFetch(Client.class);
+    }
+  }
+
 }

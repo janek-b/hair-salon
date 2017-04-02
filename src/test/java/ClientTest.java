@@ -204,4 +204,19 @@ public class ClientTest {
     assertEquals(Appointment.find(testAppointment2.getId()).getStylistId(), testStylist2.getId());
   }
 
+  @Test
+  public void searchClient_returnsAllClientsWithMatchingName_List() {
+    Stylist testStylist1 = new Stylist("Becky");
+    testStylist1.save();
+    Client testClient1 = new Client("Jessica", testStylist1.getId());
+    testClient1.save();
+    Client testClient2 = new Client("Joe", testStylist1.getId());
+    testClient2.save();
+    Client testClient3 = new Client("Boe", testStylist1.getId());
+    testClient3.save();
+    Client[] clients = new Client[] {testClient2, testClient3};
+    assertTrue(Client.searchClient("oe").containsAll(Arrays.asList(clients)));
+    assertFalse(Client.searchClient("oe").contains(testClient1));
+  }
+
 }
