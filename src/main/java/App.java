@@ -4,6 +4,7 @@ import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class App {
   public static void main(String[] args) {
@@ -90,7 +91,14 @@ public class App {
       Client client = Client.find(Integer.parseInt(request.params(":clientId")));
       String[] timeslots = {"10:00:00", "10:30:00", "11:00:00", "11:30:00", "12:00:00", "12:30:00", "01:00:00", "01:30:00", "02:00:00", "02:30:00", "03:00:00", "03:30:00", "04:00:00", "04:30:00", "05:00:00", "05:30:00", "06:00:00", "06:30:00", "07:00:00", "07:30:00"};
       model.put("timeslots", timeslots);
-      model.put("date", request.session().attribute("date"));
+      model.put("today", LocalDate.now());
+      model.put("formatter", DateTimeFormatter.ofPattern("EE MMMM dd"));
+      if (request.headers("Referer").equals(request.url())) {
+        model.put("week", request.session().attribute("week"));
+      } else {
+        request.session().attribute("week", 0);
+        model.put("week", request.session().attribute("week"));
+      }
       model.put("clientStylist", Stylist.find(client.getStylistId()));
       model.put("stylists", Stylist.all());
       model.put("client", client);
@@ -119,8 +127,9 @@ public class App {
     post("/stylists/:id/clients/:clientId/appointments/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Client client = Client.find(Integer.parseInt(request.params(":clientId")));
-      String appDate = request.queryParams("appDate");
-      String appTime = request.queryParams("appTime");
+      String[] appDateTime = request.queryParams("appDateTime").split(" ");
+      String appDate = appDateTime[0];
+      String appTime = appDateTime[1];
       Appointment newAppointment = new Appointment(client.getId(), client.getStylistId(), appDate, appTime);
       newAppointment.save();
       String url = String.format("/stylists/%d/clients/%d", client.getStylistId(), client.getId());
@@ -133,9 +142,17 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       String[] timeslots = {"10:00:00", "10:30:00", "11:00:00", "11:30:00", "12:00:00", "12:30:00", "01:00:00", "01:30:00", "02:00:00", "02:30:00", "03:00:00", "03:30:00", "04:00:00", "04:30:00", "05:00:00", "05:30:00", "06:00:00", "06:30:00", "07:00:00", "07:30:00"};
       model.put("timeslots", timeslots);
+      model.put("today", LocalDate.now());
+      model.put("formatter", DateTimeFormatter.ofPattern("EE MMMM dd"));
       model.put("appointment", Appointment.find(Integer.parseInt(request.params(":appointmentId"))));
       model.put("clientStylist", Stylist.find(Integer.parseInt(request.params(":id"))));
-      model.put("date", request.session().attribute("date"));
+      if (request.headers("Referer").equals(request.url())) {
+        model.put("week", request.session().attribute("week"));
+      } else {
+        request.session().attribute("week", 0);
+        model.put("week", request.session().attribute("week"));
+        model.put("hidden", true);
+      }
       model.put("template", "templates/appointment.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -168,9 +185,9 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/setdate/:date", (request, response) -> {
+    get("/setweek/:count", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      request.session().attribute("date", request.params(":date"));
+      request.session().attribute("week", Integer.parseInt(request.params(":count")));
       response.redirect(request.headers("Referer"));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

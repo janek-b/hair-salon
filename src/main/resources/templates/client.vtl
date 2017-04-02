@@ -9,49 +9,82 @@
     <div class="well">
       <h4>Upcoming Appointments</h4>
       #if($client.getUpcomingAppointments().size() > 0)
-        <table class="table table-bordered table-hover">
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Stylist</th>
-          </tr>
-          #foreach($appointment in $client.getUpcomingAppointments())
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
             <tr>
-              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatDate()</a></td>
-              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatTime()</a></td>
-              <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getStylistName()</a></td>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Stylist</th>
             </tr>
-          #end
-        </table>
+            #foreach($appointment in $client.getUpcomingAppointments())
+              <tr>
+                <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatDate()</a></td>
+                <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getFormatTime()</a></td>
+                <td><a href="/stylists/$appointment.getStylistId()/clients/$appointment.getClientId()/appointments/$appointment.getId()">$appointment.getStylistName()</a></td>
+              </tr>
+            #end
+          </table>
+        </div>
       #else
         <p>No upcoming appointments</p>
       #end
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
     <div class="well">
       <h4>Schedule an Appointment</h4>
       <form action="/stylists/$client.getStylistId()/clients/$client.getId()/appointments/new" method="post">
-        <label for="appDate">Select a Date</label>
-        #if($date)
-          <input value="$date" type="date" name="appDate" class="appDate form-control" onchange="setDate();" required>
-          <label for="appTime">Select a Time</label>
-          <div class="form-group">
-            #foreach($timeslot in $timeslots)
-              #if($clientStylist.timeslotAvailable($date, $timeslot))
-                <label class="radio-inline">
-                  <input type="radio" name="appTime" value="$timeslot"> $timeslot
-                </label>
-              #end
-            #end
-          </div>
+        #if($week > 0)
+          #set($prev = $week - 1)
+          <a class="pull-left btn btn-default" href="/setweek/$prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
         #else
-          <input type="date" name="appDate" class="appDate form-control" onchange="setDate();" required>
+          <a disabled class="pull-left btn btn-default" href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
         #end
-        <!-- <input type="time" name="appTime" class="form-control" required step="1800"> -->
-        <button type="submit" class="btn btn-primary">Schedule</button>
+        #set($next = $week + 1)
+        <a class="pull-right btn btn-default" href="/setweek/$next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <div class="table-responsive form-group">
+          <table id="appTable" class="table">
+            #set($start = $week * 7)
+            #set($end = 6 + $start)
+            <tr id="tableHeader">
+              <th></th>
+              #foreach($i in [$start..$end])
+                <th>$today.plusDays($i).format($formatter)</th>
+              #end
+            </tr>
+            #foreach($timeslot in $timeslots)
+              <tr>
+                <td>$timeslot</td>
+                #foreach($i in [$start..$end])
+                  <td>
+                    <div class="ck-button">
+                      <label>
+                        #if($clientStylist.timeslotAvailable($today.plusDays($i).toString(), $timeslot))
+                          <input type="radio" name="appDateTime" value="$today.plusDays($i).toString() $timeslot" required><span></span>
+                        #else
+                          <input disabled type="radio" name="appDateTime" value="$today.plusDays($i).toString() $timeslot" required><span></span>
+                        #end
+                      </label>
+                    </div>
+                  </td>
+                #end
+              </tr>
+            #end
+          </table>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="pull-right btn btn-primary">Schedule</button>
+        </div>
+        <br>
       </form>
     </div>
   </div>
 </div>
+
 
 <div class="modal fade" id="clientEditModal" tabindex="-1" role="dialog" aria-labelledby="clientEditModalLabel">
   <div class="modal-dialog" role="document">

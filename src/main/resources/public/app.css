@@ -2,3 +2,70 @@
   box-shadow: 1px 1px 5px black;
   background-color: white;
 }
+
+
+div label input {
+  margin-right: 100px;
+}
+
+.ck-button {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.ck-button label {
+  margin: auto;
+  background-color:#EFEFEF;
+  border-radius:4px;
+  border:1px solid #D0D0D0;
+  overflow:auto;
+  display: block;
+  width: 90px;
+  height: 16px;
+}
+
+.ck-button label span {
+  text-align:center;
+  font-size: 12px;
+  padding:3px 0px;
+  display:block;
+  cursor: pointer;
+  height: 16px;
+}
+
+.ck-button label input {
+  display: none;
+}
+
+.ck-button input:checked + span,
+.ck-button input:checked + span:hover {
+  background-color: green;
+  color:#fff;
+}
+
+.ck-button input:disabled + span,
+.ck-button input:disabled + span:hover {
+  background-color: red;
+  color:#fff;
+  cursor: default;
+}
+
+.ck-button input + span:hover {
+  background-color: blue;
+  color:#fff;
+}
+
+table#appTable {
+  width: 770px;
+  margin: auto;
+}
+
+table#appTable tr td,
+table#appTable tr th {
+  text-align: center;
+  padding: 2px;
+}
+
+#appEditForm {
+  display: none;
+}
