@@ -21,6 +21,12 @@
           <li><a href="/clients">Clients</a></li>
           <li><a href="/appointments">Appointments</a></li>
         </ul>
+        <form action="/search" class="navbar-form navbar-right" method="post">
+          <div class="form-group">
+            <input required name="searchInput" type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="search-btn btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
       </div>
     </nav>
     <div class="container">
