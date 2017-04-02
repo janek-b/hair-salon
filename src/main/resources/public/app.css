@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .well {
   box-shadow: 1px 1px 5px black;
@@ -78,6 +79,6 @@ table#appTable tr th {
 
 
 body {
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'Roboto', sans-serif;
   background-color: #D2D7DF;
 }
