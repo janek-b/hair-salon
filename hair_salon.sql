@@ -163,10 +163,15 @@ ALTER TABLE ONLY stylists ALTER COLUMN id SET DEFAULT nextval('stylists_id_seq':
 --
 
 COPY appointments (id, clientid, stylistid, appdate, apptime) FROM stdin;
-1	1	1	2017-04-13	15:30:00
-2	2	2	2017-03-31	16:00:00
-3	1	1	2017-04-01	15:30:00
 4	3	3	2017-03-17	17:30:00
+5	4	1	2017-03-24	13:30:00
+14	4	1	2017-04-05	11:30:00
+15	4	1	2017-04-06	10:00:00
+18	3	2	2017-04-05	11:00:00
+11	5	1	2017-04-11	12:30:00
+1	1	1	2017-04-07	04:00:00
+12	6	2	2017-04-01	12:00:00
+17	1	1	2017-04-02	12:30:00
 \.
 
 
@@ -174,7 +179,7 @@ COPY appointments (id, clientid, stylistid, appdate, apptime) FROM stdin;
 -- Name: appointments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: janek
 --
 
-SELECT pg_catalog.setval('appointments_id_seq', 4, true);
+SELECT pg_catalog.setval('appointments_id_seq', 18, true);
 
 
 --
@@ -184,6 +189,9 @@ SELECT pg_catalog.setval('appointments_id_seq', 4, true);
 COPY clients (id, name, stylistid) FROM stdin;
 1	Joe	1
 3	Matt	2
+4	Sam	1
+5	Steve	1
+6	Jimmy	2
 \.
 
 
@@ -191,7 +199,7 @@ COPY clients (id, name, stylistid) FROM stdin;
 -- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: janek
 --
 
-SELECT pg_catalog.setval('clients_id_seq', 3, true);
+SELECT pg_catalog.setval('clients_id_seq', 6, true);
 
 
 --
@@ -208,7 +216,7 @@ COPY stylists (id, name) FROM stdin;
 -- Name: stylists_id_seq; Type: SEQUENCE SET; Schema: public; Owner: janek
 --
 
-SELECT pg_catalog.setval('stylists_id_seq', 3, true);
+SELECT pg_catalog.setval('stylists_id_seq', 4, true);
 
 
 --

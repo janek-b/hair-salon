@@ -23,22 +23,28 @@ _This project is a web based management app for a hair salon. It allows a manage
 | Remove a client | clientRemove | null |
 | Get all clients for stylist | Martha | Jessica |
 | Assign a client to a random stylist | Jessica | Brenda |
-| Re-assign a client to a random stylist if their current stylist if removed | stylistRemove Brenda | Martha | 
+| Re-assign a client to a random stylist if their current stylist if removed | stylistRemove Brenda | Martha |
 
 ## Setup/Installation Requirements
 
+
+* _This app requires a database named_ ```hair_salon``` _containing 3 tables ```stylists```, ```clients``` and ```appointments```_
 * _Clone the repository_
 * _In a separate terminal window start a postgres server_
-* _Connect to postgres with psql and type_
+* _Connect to postgres with ```psql``` and type_
 ```
-# CREATE DATABSE hair_salon
+# CREATE DATABASE hair_salon;
 ```
 * _Exit psql and type the following command from the project's root directory_
 ```
 $ psql hair_salon < hair_salon.sql
 ```
-* _Run the command 'gradle run'_
-* _Open browser and go to localhost:4567_
+* _Create a test database to run tests with the below command_
+```
+# CREATE DATABASE hair_salon_test WITH TEMPLATE hair_salon;
+```
+* _Run the command ```gradle run```_
+* _Open browser and go to ```localhost:4567```_
 
 
 ### License
